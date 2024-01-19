@@ -21,11 +21,6 @@ def register(request):
 
     else:
         register_form = forms.RegistrationForm()
-    mail_subject = "Registration Email"
-    message = render_to_string("reg_msg.html", {"user": request.user})
-    to_email: request.user.email
-    send_email = EmailMessage(mail_subject, message, to=[to_email])
-    send_email.send()
     return render(
         request, "authentication.html", {"form": register_form, "type": "Registration"}
     )
