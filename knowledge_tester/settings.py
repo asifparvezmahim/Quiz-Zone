@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-e)0(mhv4em%#djav$*!#ik2_%3x6(9rk&^mp5mc#)=arq$gfi-
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["https://*.mydomain.com", "https://*.127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ["https://quiz-zone-q7i8.onrender.com/", "https://*.127.0.0.1"]
 
 
 # Application definition
