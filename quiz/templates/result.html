@@ -1,0 +1,66 @@
+{% extends "base.html" %} {% load static %} {%block title%}
+<title>Result Page</title>
+{%endblock%}
+<script src="https://code.jquery.com/jquery-7.1.0.min.js"></script>
+{%block style%}
+<style>
+  .qst_container {
+    width: 50%;
+    height: auto;
+    background-color: #e4e4e4;
+    margin-left: 30%;
+    margin-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 30px;
+    margin-bottom: 5%;
+  }
+
+  .dlt-btn{
+     margin-left:70%;
+     margin-top:2% ;
+  }
+</style>
+{%endblock%} {%block content%}
+<a class="btn btn-outline-danger dlt-btn" href="{% url "delete_result_history"%}"> Delete History </a>
+<div class="qst_container">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Question</th>
+        <th>Submitted Answer</th>
+        <th>Right Answer</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {%for row in result%}
+        <tr>
+          <td>{{row.id}}</td>
+          <td>{{row.question}}</td>
+          <td>{{row.given_answer}}</td>
+          <td>{{row.question.right_answer}}</td>
+        </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+
+<h2 class="my-4">Result Details</h2>
+<table class="table table-bordered">
+   <tr>
+     <td>Total Skipped Question</td>
+     <td>{{total_skiped}}</td>
+   </tr>
+
+   <tr>
+     <td>Total Given Answer</td>
+     <td>{{attemped}}</td>
+   </tr>
+
+   <tr>
+     <td>Total Right Answer</td>
+     <td>{{rightAns}}</td>
+   </tr>
+</table> 
+{%endblock%}

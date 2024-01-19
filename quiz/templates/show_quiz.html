@@ -1,0 +1,34 @@
+{% extends "base.html" %} {%block title%}
+<title>Show Quizes</title>
+{%endblock%} {%block style%}
+<style>
+  .cat_container {
+    padding: 15px;
+    margin-right: 20px;
+    margin-top: 10px;
+    background-color: #e4e4e4;
+    border-radius: 15px;
+  }
+
+  .quiz_container {
+    margin-top: 10px;
+  }
+</style>
+{%endblock%} {%block content%}
+<div class="mx-2 d-flex">
+  <div class="cat_container col-2">
+    <h5>Categories</h5>
+    <hr />
+    {%for cat in data%}
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <p class="mx-2">Chose Your Topic To Start Exam</p>
+      <hr>
+      {%for d in data%}
+      <li><a class="dropdown-item" href="{%url "questions" d.id %}">{{d}}</a></li>
+      {%endfor%}
+    </ul>
+    {%endfor%}
+  </div>
+  <div class="quiz_container col-10">Display Quizes</div>
+</div>
+{%endblock%}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{%block title%}
+<title>Exam Page</title>
+{%endblock%}
+<script src="https://code.jquery.com/jquery-7.1.0.min.js"></script>
+{%block style%}
+<style>
+  .qst_container {
+    width: 50%;
+    height: auto;
+    background-color: #e4e4e4;
+    margin-left: 30%;
+    margin-top: 5%;
+    padding-bottom: 1%;
+    border-radius: 30px;
+    margin-bottom: 5%;
+  }
+</style>
+{%endblock%} {%block content%}
+<div class="qst_container">
+  <h4 class="px-3 pt-3">{{question.question}} <span class="timer float-end px-3"></span> </h4>
+  <hr />
+  <form method="post" action="{% url "submit_form" category.id question.id %}">
+    {% csrf_token %}
+    <table class="table table-bordered">
+      <tr>
+        <td><input value={{question.opt_1}} id="option_1" name="answer" type="radio" /></td>
+        <th><label for="option_1">{{question.opt_1}}</label></th>
+      </tr>
+      <tr>
+        <td><input value={{question.opt_2}} id="option_2" name="answer" type="radio" /></td>
+        <th><label for="option_2">{{question.opt_2}}</label></th>
+      </tr>
+      <tr>
+        <td><input value={{question.opt_3}} id="option_3" name="answer" type="radio" /></td>
+        <th><label for="option_3">{{question.opt_3}}</label></th>
+      </tr>
+      <tr>
+        <td><input value={{question.opt_4}} id="option_4" name="answer" type="radio" /></td>
+        <th><label for="option_4">{{question.opt_4}}</label></th>
+      </tr>
+    </table>
+
+    <div class="mx-5 buttons justify-content-center">
+      <input name="pass" id="pass_btn" type="submit" value="Pass" class="btn btn-primary mx-3 skip_btn" />
+
+
+      <input name="submit" id="submit_btn" type="submit" value="Submit" class="btn btn-primary submit_btn" />
+    </div>
+  </form>
+</div>
+
+
+
+<script type='text/javascript' src="{% static "Javascript/jquery-3.6.0.min.js" %}"></script>
+<script type='text/javascript' src="{% static "timer/dist/jquery.countdown360.min.js" %}"></script>
+<script type='text/javascript'>
+
+  $(document).ready(function(){
+    $(".submit_btn").on('click',function(){  
+        var _checkedAnswer = $("input[name='answer']:checked").val();
+        if (_checkedAnswer==undefined){
+          alert("Submit an Answer");
+          return false;
+        }
+    });
+
+    $(".timer").countdowntimer({
+      second:20,
+      size:"sm",
+      timeup:function(){
+        location.reload();
+      }
+    })
+});
+</script>
+{%endblock%}
