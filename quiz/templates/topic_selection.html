@@ -19,11 +19,11 @@
       <div class="col-sm-4">
         <div class="card mx-3 mt-3">
           <div class="card-body">
-            <h5 class="card-title">Special Exam</h5>
+            <h5 class="card-title">Exam No : {{d.exam_no}}</h5>
             <p class="card-text">
               {{d.details}}
             </p>
-            <a class="btn btn-primary" href="{%url "questions" d.id %}">Category : {{d}} [Start Exam]</a>
+            <a class="btn btn-primary" href="{%url "questions" d.id %}">Category : {{d.name}} [Start Exam]</a>
           </div>
         </div>
       </div>

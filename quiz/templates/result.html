@@ -26,7 +26,6 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>#</th>
         <th>Question</th>
         <th>Submitted Answer</th>
         <th>Right Answer</th>
@@ -36,7 +35,6 @@
     <tbody>
       {%for row in result%}
         <tr>
-          <td>{{row.id}}</td>
           <td>{{row.question}}</td>
           <td>{{row.given_answer}}</td>
           <td>{{row.question.right_answer}}</td>
@@ -48,19 +46,25 @@
 
 <h2 class="my-4">Result Details</h2>
 <table class="table table-bordered">
-   <tr>
+   {% comment %} <tr>
      <td>Total Skipped Question</td>
-     <td>{{total_skiped}}</td>
-   </tr>
+     <td>{{skipped}}</td>
+   </tr> {% endcomment %}
 
-   <tr>
-     <td>Total Given Answer</td>
-     <td>{{attemped}}</td>
-   </tr>
 
    <tr>
      <td>Total Right Answer</td>
-     <td>{{rightAns}}</td>
+     <td>{{rightAnswer}}</td>
+   </tr>
+
+   <tr>
+     <td>Total Wrong Answer</td>
+     <td>{{wrongAnswer}}</td>
+   </tr>
+
+   <tr>
+     <td>Right Answer Percentage</td>
+     <td>{{percentage}}%</td>
    </tr>
 </table> 
 {%endblock%}

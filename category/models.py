@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 class Category(models.Model):
+    exam_no = models.CharField(max_length=100, null=True, blank=True)
     name = models.CharField(max_length=120)
     slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)
     image = models.ImageField(null=True, blank=True)

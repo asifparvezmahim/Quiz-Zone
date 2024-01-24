@@ -9,10 +9,13 @@ from .models import Question, UserSubmittedAnswer
 
 def showCat(request):
     cat_data = Category.objects.all()
+    t = Category.objects.all().count()
+    print(t)
     return render(request, "topic_selection.html", {"data": cat_data})  #
 
 
 def cat_questions(request, cat_id):
+    x = UserSubmittedAnswer.objects.filter(user=request.user).delete()
     # category = Category.objects.all()
     cat = Category.objects.get(id=cat_id)
     question = Question.objects.filter(category=cat).order_by("id").first()
@@ -30,62 +33,44 @@ def submit_form(request, cat_id, quest_id):
             .first()
         )
 
-        if "pass" in request.POST:  # if user press Pass button
-            if (
-                question
-            ):  # jodi previous question er por r o question thake taile segulo dekhabo
-                quest = Question.objects.get(id=quest_id)
-                user = request.user
-                answer = "Not Submitted"
-                UserSubmittedAnswer.objects.create(
-                    user=user, question=quest, given_answer=answer
-                )
-                return render(
-                    request, "exam_page.html", {"question": question, "category": cat}
-                )  # means-> id er respect e dec. order e sajiye first question pick korlam
-
-        else:  # if user click submit button
-            quest = Question.objects.get(id=quest_id)
-            user = request.user
-            answer = request.POST["answer"]
-            UserSubmittedAnswer.objects.create(
-                user=user, question=quest, given_answer=answer
-            )
-            if question:
-                return render(
-                    request, "exam_page.html", {"question": question, "category": cat}
-                )
-            else:
-                result = UserSubmittedAnswer.objects.filter(user=request.user)
-                return render(request, "result.html", {"result": result})
-
+        # After Clicking Submit Butti=on
+        quest = Question.objects.get(id=quest_id)
+        user = request.user
+        answer = request.POST["answer"]
+        UserSubmittedAnswer.objects.create(
+            user=user, question=quest, given_answer=answer
+        )
         if (
             question
         ):  # jodi previous question efr por r o question thake taile segulo dekhabo
+            print("Line 71")
             return render(
                 request, "exam_page.html", {"question": question, "category": cat}
             )
+
         else:
             result = UserSubmittedAnswer.objects.filter(user=request.user)
-            skiped = UserSubmittedAnswer.objects.filter(
+            skipped = UserSubmittedAnswer.objects.filter(
                 user=request.user, given_answer="Not Submitted"
             ).count()
-            attemped = (
-                UserSubmittedAnswer.objects.filter(user=request.user).exclude().count()
-            )
 
-            rightAns = 0
+            rightAnswer = 0
+            wrongAnswer = 0
             for row in result:
-                if row.given_answer == row.question.right_answer:
-                    rightAns = rightAns + 1
+                if row.question.right_answer == row.given_answer:
+                    rightAnswer = rightAnswer + 1
+                else:
+                    wrongAnswer = wrongAnswer + 1
+            percentage = (rightAnswer / (rightAnswer + wrongAnswer)) * 100
             return render(
                 request,
                 "result.html",
                 {
                     "result": result,
-                    "total_skiped": skiped,
-                    "attemped": attemped,
-                    "rightAns": rightAns,
+                    "skipped": skipped,
+                    "rightAnswer": rightAnswer,
+                    "wrongAnswer": wrongAnswer,
+                    "percentage": percentage,
                 },
             )
     else:

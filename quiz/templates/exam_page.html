@@ -25,28 +25,28 @@
     {% csrf_token %}
     <table class="table table-bordered">
       <tr>
-        <td><input value={{question.opt_1}} id="option_1" name="answer" type="radio" /></td>
+        <td><input class='answer' value="{{question.opt_1}}" id="option_1" name="answer" type="radio" /></td>
         <th><label for="option_1">{{question.opt_1}}</label></th>
       </tr>
       <tr>
-        <td><input value={{question.opt_2}} id="option_2" name="answer" type="radio" /></td>
+        <td><input class='answer' value="{{question.opt_2}}" id="option_2" name="answer" type="radio" /></td>
         <th><label for="option_2">{{question.opt_2}}</label></th>
       </tr>
       <tr>
-        <td><input value={{question.opt_3}} id="option_3" name="answer" type="radio" /></td>
+        <td><input class='answer' value="{{question.opt_3}}" id="option_3" name="answer" type="radio" /></td>
         <th><label for="option_3">{{question.opt_3}}</label></th>
       </tr>
       <tr>
-        <td><input value={{question.opt_4}} id="option_4" name="answer" type="radio" /></td>
+        <td><input class='answer' value="{{question.opt_4}}" id="option_4" name="answer" type="radio" /></td>
         <th><label for="option_4">{{question.opt_4}}</label></th>
       </tr>
     </table>
 
     <div class="mx-5 buttons justify-content-center">
-      <input name="pass" id="pass_btn" type="submit" value="Pass" class="btn btn-primary mx-3 skip_btn" />
+      {% comment %} <input name="pass" id="pass_btn" type="submit" value="Pass" class="btn btn-primary mx-3 skip_btn" /> {% endcomment %}
 
 
-      <input name="submit" id="submit_btn" type="submit" value="Submit" class="btn btn-primary submit_btn" />
+      <input name="submit" id="submit_btn" type="submit" value="Submit" class="btn btn-primary submitBtn" />
     </div>
   </form>
 </div>
@@ -56,23 +56,26 @@
 <script type='text/javascript' src="{% static "Javascript/jquery-3.6.0.min.js" %}"></script>
 <script type='text/javascript' src="{% static "timer/dist/jquery.countdown360.min.js" %}"></script>
 <script type='text/javascript'>
-
+{% comment %} 
   $(document).ready(function(){
-    $(".submit_btn").on('click',function(){  
+    $(".submitBtn").on('click',function(){  
         var _checkedAnswer = $("input[name='answer']:checked").val();
         if (_checkedAnswer==undefined){
           alert("Submit an Answer");
           return false;
         }
     });
+}); {% endcomment %}
 
-    $(".timer").countdowntimer({
-      second:20,
-      size:"sm",
-      timeup:function(){
-        location.reload();
+
+$(document).ready(function(){
+  $(".submitBtn").on('click',function(){  
+      var _checkedAnswer = $("input[name='answer']:checked").val();
+      if (_checkedAnswer==undefined){
+        alert("Submit an Answer");
+        return false;
       }
-    })
+  });
 });
 </script>
 {%endblock%}
